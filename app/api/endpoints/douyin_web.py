@@ -373,21 +373,20 @@ async def fetch_live_gift_ranking(request: Request,
             response_model=ResponseModel,
             summary="抖音直播间商品信息/Douyin live room product information")
 async def fetch_live_room_product_result(request: Request,
-                                         cookie: str = Query(example="YOUR_COOKIE",
-                                                             description="用户网页版抖音Cookie/Your web version of Douyin Cookie"),
                                          room_id: str = Query(example="7356742011975715619",
                                                               description="直播间room_id/Room room_id"),
                                          author_id: str = Query(example="2207432981615527",
                                                                 description="作者id/Author id"),
+                                         offset: int = Query(default=0,),
                                          limit: int = Query(default=20, description="数量/Number")):
     """
     # [中文]
     ### 用途:
     - 抖音直播间商品信息
     ### 参数:
-    - cookie: 用户网页版抖音Cookie(此接口需要用户提供自己的Cookie，如获取失败请手动过一次验证码)
     - room_id: 直播间room_id
     - author_id: 作者id
+    - offset: 分页查询起始index
     - limit: 数量
     ### 返回:
     - 商品信息
@@ -396,21 +395,21 @@ async def fetch_live_room_product_result(request: Request,
     ### Purpose:
     - Douyin live room product information
     ### Parameters:
-    - cookie: User's web version of Douyin Cookie (This interface requires users to provide their own Cookie, if the acquisition fails, please manually pass the captcha code once)
     - room_id: Room room_id
     - author_id: Author id
+    - offset: start index
     - limit: Number
     ### Return:
     - Product information
 
     # [示例/Example]
-    cookie = "YOUR_COOKIE"
     room_id = "7356742011975715619"
     author_id = "2207432981615527"
+    offset = 0
     limit = 20
     """
     try:
-        data = await DouyinWebCrawler.fetch_live_room_product_result(cookie, room_id, author_id, limit)
+        data = await DouyinWebCrawler.fetch_live_promotion_info(room_id, author_id,offset, limit)
         return ResponseModel(code=200,
                              router=request.url.path,
                              data=data)

@@ -218,6 +218,12 @@ class UserLive(BaseLiveModel):
     web_rid: str
     room_id_str: str
 
+# @HammerRay
+class LiveRoomPromotions(BaseRequestModel):
+    room_id: str
+    author_id: str
+    offset: int
+    limit: int
 
 # 直播间送礼用户排行榜
 class LiveRoomRanking(BaseRequestModel):

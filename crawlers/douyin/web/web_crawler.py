@@ -47,7 +47,7 @@ from crawlers.douyin.web.models import (
     BaseRequestModel, LiveRoomRanking, PostComments,
     PostCommentsReply, PostDetail,
     UserProfile, UserCollection, UserLike, UserLive,
-    UserLive2, UserMix, UserPost
+    UserLive2, UserMix, UserPost, LiveRoomPromotions
 )
 # 抖音应用的工具类
 from crawlers.douyin.web.utils import (AwemeIdFetcher,  # Aweme ID获取
@@ -255,6 +255,21 @@ class DouyinWebCrawler:
                 DouyinAPIEndpoints.DOUYIN_HOT_SEARCH, params.dict(), kwargs["headers"]["User-Agent"]
             )
             response = await crawler.fetch_get_json(endpoint)
+        return response
+
+    # @HammerRay
+    # 获取抖音直播间商品数据
+    async def fetch_live_promotion_info(self, room_id: str, author_id: str, offset: int = 0, limit: int = 20):
+        kwargs = await self.get_douyin_headers()
+        # print(kwargs['headers'])
+        base_crawler = BaseCrawler(proxies=kwargs["proxies"], crawler_headers=kwargs["headers"])
+        async with base_crawler as crawler:
+            params = LiveRoomPromotions(room_id=room_id, author_id=author_id, offset=offset, limit=limit)
+            endpoint = BogusManager.xb_model_2_endpoint(
+                DouyinAPIEndpoints.LIVE_PROMOTION_INFO, params.dict(), kwargs["headers"]["User-Agent"]
+            )
+            # endpoint = "https://live.douyin.com/live/promotions/page/?room_id=7501842398021028649&author_id=1794823884381775&offset=0&limit=20"
+            response = await base_crawler.fetch_post_json(endpoint)
         return response
 
     "-------------------------------------------------------utils接口列表-------------------------------------------------------"

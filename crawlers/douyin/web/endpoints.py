@@ -111,6 +111,10 @@ class DouyinAPIEndpoints:
     # 直播用户信息 (Live User Info)
     LIVE_USER_INFO = f"{LIVE_DOMAIN}/webcast/user/me/"
 
+    # @HammerRay
+    # 直播间商品信息 (Live Promotion Info )
+    LIVE_PROMOTION_INFO = f"{LIVE_DOMAIN}/live/promotions/page/"
+
     # 推荐搜索词 (Suggest Words)
     SUGGEST_WORDS = f"{DOUYIN_DOMAIN}/aweme/v1/web/api/suggest_words/"
 
