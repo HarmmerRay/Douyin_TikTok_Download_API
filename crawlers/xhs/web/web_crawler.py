@@ -9,7 +9,7 @@ import asyncio  # 异步I/O
 from lxml import html
 
 from crawlers.base_crawler import BaseCrawler
-from crawlers.xhs.web.utils import extract_initial_state_xpath
+from crawlers.xhs.web.utils import extract_video_info, extract_note_info
 
 path = os.path.abspath(os.path.dirname(__file__))
 
@@ -38,13 +38,23 @@ class XhsWebCrawler:
             # n cookie 对应 一个作品 对应 n xsec_token  只要有一个cookie 和 xsec_token 就可以拿到数据。
             response = await crawler.get_fetch_data(url)
         # print(response.text)
-        response = await extract_initial_state_xpath(response.text)
+        response = await extract_video_info(response.text)
         # print(response)
         return response
         
 
-    async def fetch_one_note(self,note_id: str):
-        return "fetch_one_note"
+    async def fetch_one_note(self,url: str):
+        # 获取小红书实时cookie
+        kwargs = await self.get_xhs_header()
+        # 创建一个基础爬虫
+        base_crawler = BaseCrawler(proxies=kwargs["proxies"], crawler_headers=kwargs["headers"])
+        async with base_crawler as crawler:  # 保证异步操作中 操作句柄/网络连接等资源被释放
+            # n cookie 对应 一个作品 对应 n xsec_token  只要有一个cookie 和 xsec_token 就可以拿到数据。
+            response = await crawler.get_fetch_data(url)
+        # print(response.text)
+        response = await extract_note_info(response.text)
+        # print(response)
+        return response
 
     async def fetch_first_level_comment(self,note_id: str):
         return "fetch_first_level_comment"
@@ -55,8 +65,12 @@ class XhsWebCrawler:
 
     async def main(self):
         # 获取单一视频笔记信息
-        url = "https://www.xiaohongshu.com/explore/6804c3c3000000001c0352dd?xsec_token=ABnas8F8abYV8JVHsJtqGXK4XXB10g0J1_oJsNxdxfeDI=&xsec_source=pc_feed"
-        result = await self.fetch_one_video(url)
+        # url = "https://www.xiaohongshu.com/explore/6804c3c3000000001c0352dd?xsec_token=ABnas8F8abYV8JVHsJtqGXK4XXB10g0J1_oJsNxdxfeDI=&xsec_source=pc_feed"
+        # result = await self.fetch_one_video(url)
+        # print(result)
+        # 获取单一图文笔记信息
+        url = "https://www.xiaohongshu.com/explore/680b87f9000000000f03a497?xsec_token=ABIX--M-eqnHdnkohztWwEyIfFtE4YT3CUdTjCD82dK60=&xsec_source=pc_feed"
+        result = await self.fetch_one_note(url)
         print(result)
 
 if __name__ == "__main__":
