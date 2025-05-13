@@ -184,6 +184,7 @@ class BaseCrawler:
         for attempt in range(self._max_retries):
             try:
                 response = await self.aclient.get(url, follow_redirects=True)
+                # print(response.text)
                 if not response.text.strip() or not response.content:
                     error_message = "第 {0} 次响应内容为空, 状态码: {1}, URL:{2}".format(attempt + 1,
                                                                                          response.status_code,

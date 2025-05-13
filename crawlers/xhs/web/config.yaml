@@ -1,0 +1,8 @@
+xhs:
+  headers:
+    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+  #  只有Cookie就可以访问到，不清楚 无User-Agent会产生什么影响。
+    Cookie: abRequestId=ef464105-474a-5b86-88b5-051f83589e24; webBuild=4.62.3; xsecappid=xhs-pc-web; a1=196c73831f7xt8tmzjy1opb62jgsyle4oylfr92ix50000109400; webId=c58e99fd626eb3716ef389e2d6ea0926; gid=yjKSWqYqSKlKyjKSWqYqyvjJiWC9Y96uVvyl13CUDKJVki28Mv1d4F888y8j4888WiDi8Yff; loadts=1747099081122; web_session=040069b72979eb4e3f73a7e9173a4ba0a10a45; websectiga=cf46039d1971c7b9a650d87269f31ac8fe3bf71d61ebf9d9a0a87efb414b816c; sec_poison_id=a9baff48-b6fe-4804-be5f-cd966dd4afaa
+  proxies:
+    http:
+    https:
