@@ -6,12 +6,14 @@ from app.api.models.APIResponseModel import ResponseModel, ErrorResponseModel
 from crawlers.xhs.web.web_crawler import XhsWebCrawler
 
 router = APIRouter()
+XhsWebCrawler = XhsWebCrawler()
 # 获取单个作品数据
 @router.get("/fetch_one_video", response_model=ResponseModel, summary="获取单个视频作品数据/Get single video data")
 async def fetch_one_video(request: Request,
-                          video_id: str = Query(example="6809acdd000000001202c014", description="作品id/Video id")):
+                          url: str = Query(example="https://www.xiaohongshu.com/explore/6804c3c3000000001c0352dd?xsec_token=ABnas8F8abYV8JVHsJtqGXK4XXB10g0J1_oJsNxdxfeDI=&xsec_source=pc_feed", description="作品url地址/Work URL")):
     try:
-        data = await XhsWebCrawler.fetch_one_video(video_id)
+        print(url)
+        data = await XhsWebCrawler.fetch_one_video(url)
         return ResponseModel(code=200,
                              router=request.url.path,
                              data=data)

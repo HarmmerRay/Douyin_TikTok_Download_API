@@ -39,7 +39,6 @@ class XhsWebCrawler:
             response = await crawler.get_fetch_data(url)
         # print(response.text)
         response = await extract_initial_state_xpath(response.text)
-
         # print(response)
         return response
         
@@ -56,7 +55,7 @@ class XhsWebCrawler:
 
     async def main(self):
         # 获取单一视频笔记信息
-        url = "https://www.xiaohongshu.com/explore/6809acdd000000001202c014?xsec_token=AB0562f9vQnINi-bglZrC4hIq3pQe1E9yM5ucnzCHF3OU=&xsec_source=pc_search&source=web_search_result_notes"
+        url = "https://www.xiaohongshu.com/explore/6804c3c3000000001c0352dd?xsec_token=ABnas8F8abYV8JVHsJtqGXK4XXB10g0J1_oJsNxdxfeDI=&xsec_source=pc_feed"
         result = await self.fetch_one_video(url)
         print(result)
 
