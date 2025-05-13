@@ -4,7 +4,7 @@ from app.api.endpoints import (
     tiktok_app,
     douyin_web,
     bilibili_web,
-    hybrid_parsing, ios_shortcut, download,
+    hybrid_parsing, ios_shortcut, download, xhs_web, ks_web,
 )
 
 router = APIRouter()
@@ -27,3 +27,8 @@ router.include_router(douyin_web.router, prefix="/douyin/web", tags=["Douyin-Web
 #
 # # Download routers
 # router.include_router(download.router, tags=["Download"])
+
+# Xhs routers
+router.include_router(xhs_web.router, prefix="/xhs/web", tags=["XHS-API"])
+# Ks routers
+router.include_router(ks_web.router, prefix="/ks/web", tags=["KS-API"])
