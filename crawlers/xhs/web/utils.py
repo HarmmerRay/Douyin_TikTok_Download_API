@@ -4,8 +4,11 @@ import json
 from lxml.etree import HTML
 
 async def extract_video_info_from_window_install(window_infos:dict):
+
+    # print(json.dumps(window_infos))
     res_data = {}
     note_id = window_infos["note"]["firstNoteId"]
+    res_data["cover_url"] = window_infos["note"]["noteDetailMap"][note_id]["note"].get("imageList")[0].get("urlDefault")
     res_data["title"] = window_infos["note"]["noteDetailMap"][note_id]["note"].get("title")
     res_data["desc"] = window_infos["note"]["noteDetailMap"][note_id]["note"].get("desc")
     res_data["like_count"] = window_infos["note"]["noteDetailMap"][note_id]["note"]["interactInfo"].get("likedCount")
